@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 19:59:09 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/09 18:01:21 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/09 19:32:03 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,11 @@ static char	*add_zeros_int2(t_flags *flags, int len, char *s, char *temp)
 			return (s);
 		if (dest[0] == '-')
 		{
-			if (flags->flags[FLAG_PREC])
-			{
-				dest[0] = '0';
-				dest2 = ft_strjoin("-", temp);
-				free(temp);
-				temp = ft_strdup(dest2);
-				free(dest2);
-			}
-			else if (flags->width)
-			{
-				temp = ft_strjoin("-", temp);
-				s++;
-			}
+			dest[0] = '0';
+			dest2 = ft_strjoin("-", temp);
+			free(temp);
+			temp = ft_strdup(dest2);
+			free(dest2);
 		}
 		free(s);
 		s = ft_strjoin(temp, dest);
@@ -68,6 +60,8 @@ char		*add_zeros_int(t_flags *flags, char *s)
 		return (NULL);
 	if (flags->flags[FLAG_PREC])
 		size = flags->precision - ft_strlen(s);
+	else if (s[0] == '-')
+		size = flags->width - ft_strlen(s) - 1;
 	else
 		size = flags->width - ft_strlen(s);
 	size = size < 0 ? -size : size;
