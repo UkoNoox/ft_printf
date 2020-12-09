@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 17:07:00 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/08 21:30:29 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/09 15:05:13 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int				check_prec_zero(t_flags *flags, va_list args);
 void			join(char *s1, char *s2);
 void			join2(char *s1, char *s2);
 
-char			*add_zeroes_int(t_flags *flags, char *s);
+char			*add_zeros_int(t_flags *flags, char *s);
 int				out(t_flags *flags, char *s, int fd);
 
 int				ft_printf(const char *format, ...);

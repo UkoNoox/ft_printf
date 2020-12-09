@@ -6,9 +6,11 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 19:59:09 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/08 21:34:51 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/09 18:01:21 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/ft_printf.h"
 
 #include "../includes/ft_printf.h"
 
@@ -23,39 +25,44 @@ static char	*get_temp(int size)
 	return (temp);
 }
 
-static char	*add_zeroes_int2(t_flags *flags, int len, char *s, char *temp)
+static char	*add_zeros_int2(t_flags *flags, int len, char *s, char *temp)
 {
 	char	*dest;
+	char	*dest2;
 
-	dest = NULL;
 	if ((len < flags->precision || len < flags->width) && temp)
 	{
-		if (s[0] == '-')
+		if (!(dest = ft_strdup(s)))
+			return (s);
+		if (dest[0] == '-')
 		{
 			if (flags->flags[FLAG_PREC])
 			{
 				dest[0] = '0';
-				dest = ft_strjoin("-", temp);
+				dest2 = ft_strjoin("-", temp);
+				free(temp);
+				temp = ft_strdup(dest2);
+				free(dest2);
 			}
 			else if (flags->width)
 			{
-				dest = ft_strjoin("-", temp);
+				temp = ft_strjoin("-", temp);
 				s++;
 			}
 		}
-		dest = ft_strjoin(temp, s);
+		free(s);
+		s = ft_strjoin(temp, dest);
+		free(dest);
 	}
 	free(temp);
-	s = ft_strcpy(s, dest);
-	free(dest);
 	return (s);
 }
 
-char		*add_zeroes_int(t_flags *flags, char *s)
+char		*add_zeros_int(t_flags *flags, char *s)
 {
+	char	*temp;
 	int		len;
 	int		size;
-	char	*temp;
 
 	if (!s)
 		return (NULL);
@@ -75,6 +82,7 @@ char		*add_zeroes_int(t_flags *flags, char *s)
 	len = ft_strlen(s);
 	if (s[0] == '-')
 		len--;
-	temp = get_temp(size);
-	return (add_zeroes_int2(flags, len, s, temp));
+	if (!(temp = get_temp(size)))
+		return (s);
+	return (add_zeros_int2(flags, len, s, temp));
 }

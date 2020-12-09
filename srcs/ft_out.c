@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 18:06:46 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/08 21:32:45 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/09 16:07:49 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static char	*add_spaces(t_flags *flags, char *s, int size)
 {
-	char	*dest;
 	char	*temp;
+	char	*dest;
 
 	if (!s || size < 0)
 		return (s);
@@ -23,15 +23,14 @@ static char	*add_spaces(t_flags *flags, char *s, int size)
 		return (s);
 	temp = ft_memset(temp, ' ', size);
 	temp[size] = '\0';
-	dest = NULL;
+	dest = s;
 	if (!flags->flags[FLAG_LEFT] && !flags->flags[FLAG_MINUS])
 		dest = ft_strjoin(temp, s);
 	else if (flags->flags[FLAG_LEFT] || flags->flags[FLAG_MINUS])
 		dest = ft_strjoin(s, temp);
 	free(temp);
-	s = ft_strcpy(s, dest);
-	free(dest);
-	return (s);
+	free(s);
+	return (dest);
 }
 
 char		*add_padding(t_flags *fl, char *s)
@@ -43,7 +42,7 @@ char		*add_padding(t_flags *fl, char *s)
 		fl->specs[SPEC_HEX] || fl->specs[SPEC_PCENT])
 	{
 		if (fl->flags[FLAG_PREC] || fl->flags[FLAG_ZERO])
-			s = add_zeroes_int(fl, s);
+			s = add_zeros_int(fl, s);
 		if (fl->width > (int)ft_strlen(s))
 			s = add_spaces(fl, s, fl->width - ft_strlen(s));
 	}
@@ -51,7 +50,7 @@ char		*add_padding(t_flags *fl, char *s)
 			fl->specs[SPEC_PTR] || fl->specs[SPEC_PCENT])
 	{
 		if (fl->flags[FLAG_ZERO])
-			s = add_zeroes_int(fl, s);
+			s = add_zeros_int(fl, s);
 		if (fl->width)
 			s = add_spaces(fl, s, fl->width - ft_strlen(s));
 	}
@@ -65,6 +64,9 @@ int			out(t_flags *flags, char *s, int fd)
 	ret = 0;
 	s = add_padding(flags, s);
 	ft_putstr_fd(s, fd);
+	(void)fd;
+	(void)flags;
 	ret += ft_strlen(s);
+	free(s);
 	return (ret);
 }

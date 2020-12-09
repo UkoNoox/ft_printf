@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 17:06:57 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/08 20:25:13 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/09 14:17:37 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,11 @@ static char	*get_str(t_flags *flags, va_list va)
 static int	ft_conversion(t_flags *flags, va_list va)
 {
 	int		ret;
-	char	*s;
 
 	if (check_prec_zero(flags, va))
-		return (out(flags, "", STDOUT));
+		return (out(flags, ft_strdup(""), STDOUT));
 	ret = 0;
-	s = NULL;
-	s = get_str(flags, va);
-	ret += out(flags, s, STDOUT);
-	free(s);
+	ret += out(flags, get_str(flags, va), STDOUT);
 	init_flags(flags);
 	return (ret);
 }
