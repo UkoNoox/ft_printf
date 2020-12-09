@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 17:06:57 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/09 14:17:37 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/09 20:10:29 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*get_str(t_flags *flags, va_list va)
 	else if (flags->specs[SPEC_STR])
 		s = ft_strdup(va_arg(va, char *));
 	else if (flags->specs[SPEC_PTR])
-		s = ft_itoa_hex(flags, va_arg(va, unsigned int), 16);
+		s = ft_itoa_hex(flags, va_arg(va, unsigned long), 16);
 	else if (flags->specs[SPEC_INT])
 		s = ft_itoa(va_arg(va, int));
 	else if (flags->specs[SPEC_HEX] == 1)
