@@ -6,11 +6,9 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 19:59:09 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/10 15:50:45 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/10 15:55:09 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../includes/ft_printf.h"
 
 #include "../includes/ft_printf.h"
 
@@ -25,39 +23,29 @@ static char	*get_temp(int size)
 	return (temp);
 }
 
-static char	*add_zeros_int3(t_flags *flags, char *temp, char *s)
+static char	*add_zeros_int2(t_flags *flags, int len, char *s, int size)
 {
-	char	*dest;
-	char	*dest2;
+	char	*temp;
 
-	dest = ft_strdup(s);
-	if (dest[0] == '-')
-	{
-		dest2 = ft_strdup(temp);
-		if (flags->flags[FLAG_PREC])
-		{
-			free(dest2);
-			dest[0] = '0';
-			dest2 = ft_strjoin("-", temp);
-		}
-		else if (flags->width)
-		{
-			free(dest2);
-			dest2 = ft_strjoin("-", temp);
-			dest++;
-		}
-		free(s);
-		s = ft_strjoin(dest2, dest);
-		free(dest);
-		free(dest2);
-	}
-	return (s);
-}
-
-static char	*add_zeros_int2(t_flags *flags, int len, char *s, char *temp)
-{
+	if (!(temp = get_temp(size)))
+		return (s);
 	if ((len < flags->precision || len < flags->width) && temp)
-		s = add_zeros_int3(flags, temp, s);
+	{
+		if (s[0] == '-')
+		{
+			if (flags->flags[FLAG_PREC])
+			{
+				s[0] = '0';
+				temp = ft_strjoin("-", temp);
+			}
+			else if (flags->width)
+			{
+				temp = ft_strjoin("-", temp);
+				s++;
+			}
+		}
+		s = ft_strjoin(temp, s);
+	}
 	free(temp);
 	return (s);
 }
@@ -85,5 +73,5 @@ char		*add_zeros_int(t_flags *flags, char *s)
 	len = ft_strlen(s);
 	if (s[0] == '-')
 		len--;
-	return (add_zeros_int2(flags, len, s, get_temp(size)));
+	return (add_zeros_int2(flags, len, s, size));
 }
