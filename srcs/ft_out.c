@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 18:06:46 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/10 17:11:45 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/10 17:17:19 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,19 @@ char		*add_padding(t_flags *fl, char *s)
 int			out(t_flags *flags, char *s, int fd)
 {
 	int		ret;
+	int		len;
 
 	ret = 0;
-	s = add_padding(flags, s);
+	len = ft_strlen(s);
 	if (flags->specs[SPEC_CHAR] && *s == '\0')
 	{
-		write(1, s, ft_strlen(s) + 1);
+		s = add_padding(flags, s);
+		write(1, s, len + 1);
 		free(s);
 		return (1);
 	}
+	s = add_padding(flags, s);
 	ft_putstr_fd(s, fd);
-	(void)fd;
-	(void)flags;
 	ret += ft_strlen(s);
 	free(s);
 	return (ret);
