@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 17:07:00 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/09 15:05:13 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/11 00:11:30 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void			check_flags(t_flags *flags);
 const char		*get_flags(const char *f, t_flags *flags, va_list va);
 
 char			*ft_itoa_hex(t_flags *flags, long value, int base);
-int				check_prec_zero(t_flags *flags, va_list args);
+int				check_prec_zero(t_flags *flags, va_list args, int temp);
 
 void			join(char *s1, char *s2);
 void			join2(char *s1, char *s2);
