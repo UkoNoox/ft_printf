@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 18:06:46 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/10 17:02:26 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/10 17:04:18 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			out(t_flags *flags, char *s, int fd)
 	{
 		write(1, s, 1);
 		free(s);
-		return (ft_strlen(s));
+		return (1);
 	}
 	ft_putstr_fd(s, fd);
 	(void)fd;
