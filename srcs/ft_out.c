@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 18:06:46 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/10 17:50:02 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/10 17:53:31 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,39 +59,26 @@ char		*add_padding(t_flags *fl, char *s)
 
 int			out(t_flags *flags, char *s, int fd)
 {
-	int		ret;
-
-	ret = 0;
 	if (flags->specs[SPEC_CHAR])
 	{
 		if (s[0] == '\0')
 		{
+			s[0] = ' ';
+			s = add_padding(flags, s);
 			if (!flags->flags[FLAG_LEFT] && !flags->flags[FLAG_MINUS])
 			{
-				s[0] = ' ';
-				s = add_padding(flags, s);
 				write(fd, s, ft_strlen(s) - 1);
 				write(fd, "\0", 1);
 			}
 			else if (flags->flags[FLAG_LEFT] || flags->flags[FLAG_MINUS])
 			{
-				s[0] = ' ';
-				s = add_padding(flags, s);
 				write(fd, "\0", 1);
 				write(fd, s, ft_strlen(s) - 1);
 			}
 		}
-		else
-		{
-			s = add_padding(flags, s);
-			ft_putstr_fd(s, fd);
-		}
-		free(s);
-		return (ft_strlen(s));
 	}
 	s = add_padding(flags, s);
 	ft_putstr_fd(s, fd);
-	ret += ft_strlen(s);
 	free(s);
-	return (ret);
+	return (ft_strlen(s));
 }
