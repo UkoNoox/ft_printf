@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 18:06:46 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/10 18:18:15 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/10 18:53:44 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*add_spaces(t_flags *flags, char *s, int size)
 char		*add_padding(t_flags *fl, char *s)
 {
 	if (fl->flags[FLAG_PREC] && fl->precision < (int)ft_strlen(s) &&
-		(fl->specs[SPEC_CHAR] || fl->specs[SPEC_STR]))
+		fl->specs[SPEC_STR])
 		s = ft_strncpy(s, s, fl->precision);
 	if (fl->specs[SPEC_INT] || fl->specs[SPEC_UINT] ||
 		fl->specs[SPEC_HEX] || fl->specs[SPEC_PCENT])
@@ -80,7 +80,6 @@ static int	check_char(t_flags *flags, char *s, int fd, int ret)
 		ft_putstr_fd(s, fd);
 	}
 	ret += ft_strlen(s);
-	free(s);
 	return (ret);
 }
 
@@ -93,7 +92,10 @@ int			out(t_flags *flags, char *s, int fd)
 	{
 		ret += check_char(flags, s, fd, 0);
 		if (ret)
+		{
+			free(s);
 			return (ret);
+		}
 	}
 	s = add_padding(flags, s);
 	ft_putstr_fd(s, fd);
