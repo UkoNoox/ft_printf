@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 19:59:09 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/10 15:55:09 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/10 16:03:02 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,35 @@ static char	*get_temp(int size)
 	return (temp);
 }
 
+static char	*add_zeros_int3(t_flags *flags, char *s, char *temp, char *dest)
+{
+	char	*temp2;
+
+	if (dest[0] == '-')
+	{
+		temp2 = ft_strdup(temp);
+		if (flags->flags[FLAG_PREC])
+		{
+			dest[0] = '0';
+			free(temp2);
+			temp2 = ft_strjoin("-", temp);
+		}
+		else if (flags->width)
+		{
+			free(temp2);
+			temp2 = ft_strjoin("-", temp);
+			dest++;
+		}
+		free(s);
+		s = ft_strjoin(temp2, dest);
+		if (flags->width)
+			dest--;
+		free(dest);
+		free(temp2);
+	}
+	return (s);
+}
+
 static char	*add_zeros_int2(t_flags *flags, int len, char *s, int size)
 {
 	char	*temp;
@@ -30,22 +59,7 @@ static char	*add_zeros_int2(t_flags *flags, int len, char *s, int size)
 	if (!(temp = get_temp(size)))
 		return (s);
 	if ((len < flags->precision || len < flags->width) && temp)
-	{
-		if (s[0] == '-')
-		{
-			if (flags->flags[FLAG_PREC])
-			{
-				s[0] = '0';
-				temp = ft_strjoin("-", temp);
-			}
-			else if (flags->width)
-			{
-				temp = ft_strjoin("-", temp);
-				s++;
-			}
-		}
-		s = ft_strjoin(temp, s);
-	}
+		s = add_zeros_int3(flags, s, temp, ft_strdup(s));
 	free(temp);
 	return (s);
 }
@@ -65,8 +79,6 @@ char		*add_zeros_int(t_flags *flags, char *s)
 	if ((flags->flags[FLAG_MINUS] || flags->flags[FLAG_LEFT]) &&
 		!flags->flags[FLAG_PREC])
 		size = 0;
-	if (size <= 0)
-		return (s);
 	if (flags->flags[FLAG_PREC] && flags->precision < flags->width &&
 		flags->precision < (int)ft_strlen(s))
 		return (s);
