@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 19:59:09 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/10 16:07:48 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/10 16:12:16 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static char	*add_zeros_int3(t_flags *flags, char *s, char *temp, char *dest)
 	char	*dest2;
 
 	dest2 = dest;
+	temp2 = ft_strdup(temp);
 	if (dest[0] == '-')
 	{
-		temp2 = ft_strdup(temp);
 		if (flags->flags[FLAG_PREC])
 		{
 			dest[0] = '0';
@@ -44,11 +44,11 @@ static char	*add_zeros_int3(t_flags *flags, char *s, char *temp, char *dest)
 			temp2 = ft_strjoin("-", temp);
 			dest++;
 		}
-		free(s);
-		s = ft_strjoin(temp2, dest);
-		free(dest2);
-		free(temp2);
 	}
+	free(s);
+	s = ft_strjoin(temp2, dest);
+	free(temp2);
+	free(dest2);
 	return (s);
 }
 
