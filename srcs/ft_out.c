@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 18:06:46 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/11 00:15:25 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/11 00:17:45 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int			out(t_flags *flags, char *s, int fd)
 	ret = 0;
 	if (flags->specs[SPEC_CHAR])
 	{
-		init_flags(flags);
 		ret += check_char(flags, s, fd, 0);
+		init_flags(flags);
 		if (ret)
 			return (ret);
 	}
