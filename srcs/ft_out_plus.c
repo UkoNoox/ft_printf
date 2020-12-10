@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 19:59:09 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/10 15:16:07 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/10 15:50:45 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,45 @@ static char	*get_temp(int size)
 	return (temp);
 }
 
-static char	*add_zeros_int2(t_flags *flags, int len, char *s, char *temp)
+static char	*add_zeros_int3(t_flags *flags, char *temp, char *s)
 {
 	char	*dest;
 	char	*dest2;
 
-	if ((len < flags->precision || len < flags->width) && temp)
+	dest = ft_strdup(s);
+	if (dest[0] == '-')
 	{
-		if (!(dest = ft_strdup(s)))
-			return (s);
-		if (dest[0] == '-')
+		dest2 = ft_strdup(temp);
+		if (flags->flags[FLAG_PREC])
 		{
+			free(dest2);
 			dest[0] = '0';
 			dest2 = ft_strjoin("-", temp);
-			free(temp);
-			temp = ft_strdup(dest2);
+		}
+		else if (flags->width)
+		{
 			free(dest2);
+			dest2 = ft_strjoin("-", temp);
+			dest++;
 		}
 		free(s);
-		s = ft_strjoin(temp, dest);
+		s = ft_strjoin(dest2, dest);
 		free(dest);
+		free(dest2);
 	}
+	return (s);
+}
+
+static char	*add_zeros_int2(t_flags *flags, int len, char *s, char *temp)
+{
+	if ((len < flags->precision || len < flags->width) && temp)
+		s = add_zeros_int3(flags, temp, s);
 	free(temp);
 	return (s);
 }
 
 char		*add_zeros_int(t_flags *flags, char *s)
 {
-	char	*temp;
 	int		len;
 	int		size;
 
@@ -66,13 +77,13 @@ char		*add_zeros_int(t_flags *flags, char *s)
 	if ((flags->flags[FLAG_MINUS] || flags->flags[FLAG_LEFT]) &&
 		!flags->flags[FLAG_PREC])
 		size = 0;
+	if (size <= 0)
+		return (s);
 	if (flags->flags[FLAG_PREC] && flags->precision < flags->width &&
 		flags->precision < (int)ft_strlen(s))
 		return (s);
 	len = ft_strlen(s);
 	if (s[0] == '-')
 		len--;
-	if (!(temp = get_temp(size)))
-		return (s);
-	return (add_zeros_int2(flags, len, s, temp));
+	return (add_zeros_int2(flags, len, s, get_temp(size)));
 }
