@@ -6,7 +6,7 @@
 /*   By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 18:06:46 by ugdaniel          #+#    #+#             */
-/*   Updated: 2020/12/10 17:53:31 by ugdaniel         ###   ########.fr       */
+/*   Updated: 2020/12/10 17:55:08 by ugdaniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int			out(t_flags *flags, char *s, int fd)
 				write(fd, s, ft_strlen(s) - 1);
 			}
 		}
+		free(s);
+		return (ft_strlen(s));
 	}
 	s = add_padding(flags, s);
 	ft_putstr_fd(s, fd);
