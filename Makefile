@@ -6,7 +6,7 @@
 #    By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/08 17:06:55 by ugdaniel          #+#    #+#              #
-#    Updated: 2020/12/08 20:11:01 by ugdaniel         ###   ########.fr        #
+#    Updated: 2020/12/14 15:24:36 by ugdaniel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	=	libftprintf.a
 HEADERS	=	./includes/ft_printf.h
 
 LIBPATH	=	./libft/
-LIBNAME	=	$(LIBPATH)libft.a
+LIBNAME	=	libft.a
 
 SRCS	=	./srcs/ft_printf.c \
 			./srcs/ft_flags.c \
@@ -25,28 +25,32 @@ SRCS	=	./srcs/ft_printf.c \
 
 OBJS	= $(SRCS:c=o)
 
-CC		= clang
+CC		= @clang
 FLAGS	= -Wall -Wextra -Werror
 
 $(NAME): $(OBJS)
-	make -C $(LIBPATH)
-	cp $(LIBNAME) $(NAME)
-	ar rcs $(NAME) $(OBJS)
+	@make -C $(LIBPATH) 1> /dev/null
+	@echo "$(LIBNAME) created"
+	@cp $(LIBPATH)$(LIBNAME) $(NAME)
+	@ar rcs $(NAME) $(OBJS)
+	@echo "$(NAME) created"
 
 %.o: %.c
 	$(CC) $(FLAGS) -I $(HEADERS) -c $< -o $@
 
 libft:
-	make -C $(LIBPATH)
+	@make -C $(LIBPATH) 1> /dev/null
 
 all: $(NAME)
 
 clean:
-	make clean -C $(LIBPATH)
-	rm -f $(OBJS)
+	@make clean -C $(LIBPATH) 1> /dev/null
+	@rm -f $(OBJS)
+	@echo ".o files deleted"
 
 fclean: clean
-	make fclean -C $(LIBPATH)
-	rm -f $(NAME)
+	@make fclean -C $(LIBPATH) 1> /dev/null
+	@echo "$(LIBNAME) deleted"
+	@if (rm $(NAME) 2> /dev/null); then echo "$(NAME) deleted"; else echo "Nothing to be done for libftprintf.a"; fi;
 
 re: fclean all

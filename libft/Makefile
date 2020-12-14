@@ -6,7 +6,7 @@
 #    By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 12:23:21 by ugdaniel          #+#    #+#              #
-#    Updated: 2020/12/07 14:54:34 by ugdaniel         ###   ########.fr        #
+#    Updated: 2020/12/14 15:20:17 by ugdaniel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,12 +63,13 @@ SRCS	=	ft_memset.c \
 			ft_lstiter.c \
 			ft_lstmap.c
 
-CC		=	clang
+CC		=	@clang
 FLAGS	=	-Wall -Wextra -Werror
 OBJS	=	$(SRCS:c=o)
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
+	@echo "$(NAME) created"
 
 %.o: %.c
 	$(CC) $(FLAGS) -I $(HEADERS) -o $@ -c $< 
@@ -76,13 +77,14 @@ $(NAME): $(OBJS)
 all: $(NAME)
 
 bonus: $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
 
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
+	@echo ".o files deleted"
 
 fclean: clean
-	rm -f $(NAME)
+	@if (rm $(NAME) 2> /dev/null); then echo "$(NAME) deleted"; else echo "Nothing to be done for libft.a"; fi;
 
 re: fclean all
 
