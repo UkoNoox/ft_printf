@@ -6,7 +6,7 @@
 #    By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/08 17:06:55 by ugdaniel          #+#    #+#              #
-#    Updated: 2020/12/14 15:26:29 by ugdaniel         ###   ########.fr        #
+#    Updated: 2020/12/14 16:25:13 by ugdaniel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,7 @@ CC		= @clang
 FLAGS	= -Wall -Wextra -Werror
 
 $(NAME): $(OBJS)
-	@make -C $(LIBPATH) 1> /dev/null
-	@echo "$(LIBNAME) created"
+	@make -s -C $(LIBPATH)
 	@cp $(LIBPATH)$(LIBNAME) $(NAME)
 	@ar rcs $(NAME) $(OBJS)
 	@echo "$(NAME) created"
@@ -38,19 +37,20 @@ $(NAME): $(OBJS)
 %.o: %.c
 	$(CC) $(FLAGS) -I $(HEADERS) -c $< -o $@
 
-libft:
-	@make -C $(LIBPATH) 1> /dev/null
+lib:
+	@make -s re -C $(LIBPATH)
 
 all: $(NAME)
 
 clean:
-	@make clean -C $(LIBPATH) 1> /dev/null
+	@make -s clean -C $(LIBPATH)
 	@rm -f $(OBJS)
-	@echo ".o files deleted"
+	@echo "$(NAME:.a=): .o files deleted"
 
 fclean: clean
-	@make fclean -C $(LIBPATH) 1> /dev/null
-	@echo "$(LIBNAME) deleted"
-	@if (rm $(NAME) 2> /dev/null); then echo "$(NAME) deleted"; else echo "Nothing to be done for libftprintf.a"; fi;
+	@if (rm $(LIBPATH)$(LIBNAME) 2> /dev/null); then echo "$(LIBNAME) deleted"; else echo "Nothing to be done for $(LIBNAME)"; fi;
+	@if (rm $(NAME) 2> /dev/null); then echo "$(NAME) deleted"; else echo "Nothing to be done for $(NAME)"; fi;
 
 re: fclean all
+
+.PHONY: all clean fclean re lib

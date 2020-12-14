@@ -6,7 +6,7 @@
 #    By: ugdaniel <ugdaniel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 12:23:21 by ugdaniel          #+#    #+#              #
-#    Updated: 2020/12/14 15:26:30 by ugdaniel         ###   ########.fr        #
+#    Updated: 2020/12/14 16:10:51 by ugdaniel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ bonus: $(OBJS)
 
 clean:
 	@rm -f $(OBJS)
-	@echo ".o files deleted"
+	@echo "$(NAME:.a=): .o files deleted"
 
 fclean: clean
 	@if (rm $(NAME) 2> /dev/null); then echo "$(NAME) deleted"; else echo "Nothing to be done for libft.a"; fi;
