@@ -83,7 +83,7 @@ const char	*get_prec_field(const char *f, t_flags *flags, va_list va)
 }
 
 /*
-**	Looks for a given width_field in the inputted string.
+**	Looks for a given width field in the inputted string.
 **	then goes on to the precision.
 */
 
